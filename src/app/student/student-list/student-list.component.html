@@ -1,0 +1,52 @@
+<div class="text-xl px-4 py-3 text-gray-400">
+    Students
+</div>
+<div class="flex justify-end p-1">
+    <button class="p-2 bg-blue-300 rounded cursor-pointer hover:bg-blue-500 hover:text-white" type="button"
+        (click)="addStudent()">Add Student</button>
+</div>
+<div class="flex gap-1 items-center p-1">
+    <div class="w-3/12">
+        <input class="w-full bg-gray-200 p-2 rounded border focus:outline-none focus:border focus:border-blue-300"
+            placeholder=" Search" type="text">
+    </div>
+    <div>
+        <button class="flex justify-center p-2.5 bg-blue-300 rounded cursor-pointer hover:bg-blue-500 hover:text-white">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </div>
+</div>
+<div>
+    <table class="w-full p-1">
+        <thead>
+            <tr class="h-10 border-b text-left">
+                <th class="px-4">ID</th>
+                <th class="px-4">First Name</th>
+                <th class="px-4">Last Name</th>
+                <th class="px-4">Standard</th>
+                <th class="px-4">Section</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (item of data;track item.id) {
+            <tr class="h-10 border-b text-left">
+                <td class="px-4">{{ item.fields.id }}</td>
+                <td class="px-4">{{ item.fields.first_name }}</td>
+                <td class="px-4">{{ item.fields.last_name }}</td>
+                <td class="px-4">{{ item.fields.standard }}</td>
+                <td class="px-4">
+                    <div class="text-xs flex gap-1">
+
+                        <button class="p-2 bg-blue-300 rounded cursor-pointer hover:bg-blue-500 hover:text-white"
+                            (click)="editStudent(item.fields)">Personal</button>
+                        <button class="p-2 bg-green-300 rounded cursor-pointer hover:bg-green-500 hover:text-white"
+                            (click)="editStudentFee(item.fields)">Fee</button>
+                    </div>
+                </td>
+            </tr>
+            } @empty {
+            <label> There are no items. </label>
+            }
+        </tbody>
+    </table>
+</div>

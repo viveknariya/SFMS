@@ -1,0 +1,126 @@
+<div class="flex flex-col gap-1 w-full h-full overflow-y-auto no-scrollbar p-1">
+    <div class="flex gap-2">
+        <div>
+            <button class="p-2 bg-purple-200 rounded hover:bg-purple-300" type="button"
+                (click)="backToStandard()">Back</button>
+        </div>
+        <div>
+            <button class="p-2 bg-blue-200 rounded hover:bg-blue-300" type="button">Save</button>
+        </div>
+        <div>
+            <button class="p-2 bg-blue-200 rounded hover:bg-blue-300" type="button">Cancel</button>
+        </div>
+    </div>
+    <div class="border rounded">
+        <form [formGroup]="editStudent" class="flex flex-col gap-2">
+            <div class="flex gap-2">
+                <div class="w-3/12">
+                    <label class="p-2 w-full text-end inline-block">ID</label>
+                </div>
+                <div class="w-6/12">
+                    <input class="p-2 focus:outline-none bg-blue-100 rounded w-full" placeholder="ID"
+                        formControlName="id" type="text">
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <div class="w-3/12">
+                    <label class="p-2 w-full text-end inline-block">First Name</label>
+                </div>
+                <div class="w-6/12">
+                    <input class="p-2 focus:outline-none bg-blue-100 rounded w-full" placeholder="First Name"
+                        formControlName="first_name" type="text">
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <div class="w-3/12">
+                    <label class="p-2 w-full text-end inline-block">Last Name</label>
+                </div>
+                <div class="w-6/12">
+                    <input class="p-2 focus:outline-none bg-blue-100 rounded w-full" placeholder="Last Name"
+                        formControlName="last_name" type="text">
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <div class="w-3/12">
+                    <label class="p-2 w-full text-end inline-block">Gender</label>
+                </div>
+                <div class="w-3/12">
+                    <select formControlName="gender" class="w-full p-2 rounded bg-blue-100 focus:outline-none">
+                        <option *ngFor="let item of genders" [value]="item">
+                            {{item}}</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="flex gap-2">
+                <div class="w-3/12">
+                    <label class="p-2 w-full text-end inline-block">Date Of Birth</label>
+                </div>
+                <div class="w-3/12">
+                    <input class="p-2 focus:outline-none bg-blue-100 rounded w-full" placeholder="Date Of Birth"
+                        formControlName="date_of_birth" type="date">
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <div class="w-3/12">
+                    <label class="p-2 w-full text-end inline-block">Standard</label>
+                </div>
+                <div class="w-3/12">
+                    <select formControlName="standard" class="w-full p-2 rounded bg-blue-100 focus:outline-none">
+                        @for (item of standards;track item) {
+                        <option [value]="item">{{item}}</option>
+                        }@empty {
+                        <label> There are no items.</label>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <div class="w-3/12">
+                    <label class="p-2 w-full text-end inline-block">Parents Name</label>
+                </div>
+                <div class="w-6/12">
+                    <input class="p-2 focus:outline-none bg-blue-100 rounded w-full" placeholder="Parents Name"
+                        formControlName="parents_name" type="text">
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <div class="w-3/12">
+                    <label class="p-2 w-full text-end inline-block">Parents Mobile</label>
+                </div>
+                <div class="w-6/12">
+                    <input class="p-2 focus:outline-none bg-blue-100 rounded w-full" placeholder="Parents Mobile"
+                        formControlName="parents_mobile" type="text">
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <div class="w-3/12">
+                    <label class="p-2 w-full text-end inline-block">School Name</label>
+                </div>
+                <div class="w-6/12">
+                    <input class="p-2 focus:outline-none bg-blue-100 rounded w-full" placeholder="School Name"
+                        formControlName="school_name" type="text">
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <div class="w-3/12">
+                    <label class="p-2 w-full text-end inline-block">Date Of Admision</label>
+                </div>
+                <div class="w-3/12">
+                    <input class="p-2 focus:outline-none bg-blue-100 rounded w-full" placeholder="Date Of Admision"
+                        formControlName="date_of_admission" type="date">
+                </div>
+            </div>
+
+            <div class="flex gap-2">
+                <div class="w-3/12">
+                    <label class="p-2 w-full text-end inline-block">Comment</label>
+                </div>
+                <div class="w-6/12">
+                    <textarea class="p-2 focus:outline-none bg-blue-100 rounded w-full" placeholder="Comment"
+                        formControlName="comment" type="text"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

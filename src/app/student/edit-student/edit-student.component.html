@@ -1,0 +1,38 @@
+<div class="flex flex-col">
+    <div class="px-1">
+        <div class="bg-gray-500 rounded p-2 flex gap-2">
+            <div class="flex flex-col text-6xl">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="flex flex-col w-full">
+                <div class="flex">
+                    <div class="w-2/12">
+                        First Name
+                    </div>
+                    <div>
+                        : {{selectedStudent.first_name}}
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="w-2/12">
+                        Last Name
+                    </div>
+                    <div>
+                        : {{selectedStudent.last_name}}
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="w-2/12">
+                        Standard
+                    </div>
+                    <div>
+                        : {{selectedStudent.standard}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+</div>
