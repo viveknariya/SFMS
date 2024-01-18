@@ -14,8 +14,8 @@ export class MenuComponent {
 
   }
   toNavigate(val:string){
-    this.studentService.selectedStandard.set({name:"# All",id:"0"});
     this.router.navigate([val])
-  
+    this.studentService.selectedStandard.set(this.studentService.standards[0]);
+
   }
 }

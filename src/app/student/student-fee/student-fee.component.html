@@ -1,0 +1,40 @@
+<div class="text-xl px-4 py-3 text-gray-400">
+    Fees
+</div>
+<div class="flex justify-end p-1">
+    <button class="p-2 bg-blue-300 rounded cursor-pointer hover:bg-blue-500 hover:text-white" type="button"
+        (click)="addStudentFee()">Add Fee</button>
+</div>
+
+<div>
+    <table class="w-full p-1">
+        <thead>
+            <tr class="h-10 border-b text-left">
+                <th class="px-4">ID</th>
+                <th class="px-4">Amount</th>
+                <th class="px-4">Date</th>
+                <th class="px-4">Mode Of Transection</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (item of data;track item.id) {
+            <tr class="h-10 border-b text-left">
+                <td class="px-4">{{ item.fields.id }}</td>
+                <td class="px-4">{{ item.fields.amount }}</td>
+                <td class="px-4">{{ item.fields.date_of_transection }}</td>
+                <td class="px-4">{{ item.fields.mode_of_transection }}</td>
+                <td class="px-4">
+                    <div class="text-xs flex gap-1">
+                        <button class="p-2 bg-green-300 rounded cursor-pointer hover:bg-green-500 hover:text-white"
+                            (click)="editStudentFee(item)">Edit Fee</button>
+                        <button class="p-2 bg-red-300 rounded cursor-pointer hover:bg-green-500 hover:text-white"
+                            (click)="deleteStudentFee(item)">Delete Fee</button>
+                    </div>
+                </td>
+            </tr>
+            } @empty {
+            <label> There are no items. </label>
+            }
+        </tbody>
+    </table>
+</div>

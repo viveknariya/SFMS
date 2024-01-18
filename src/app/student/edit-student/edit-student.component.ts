@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { FieldsStudent, StudentService } from '../student.service';
-import { EditStudentPersonalComponent } from './edit-student-personal/edit-student-personal.component';
+import { Router, RouterOutlet } from '@angular/router';
+import { RecordStudent, StudentService } from '../student.service';
 
 @Component({
   selector: 'app-edit-student',
@@ -13,12 +12,14 @@ import { EditStudentPersonalComponent } from './edit-student-personal/edit-stude
 })
 export class EditStudentComponent {
 
-  selectedStudent!: FieldsStudent;
+  skipOnInit:boolean = false;
+  selectedStudent!: RecordStudent;
 
-  constructor(private studentService:StudentService){
-    this.selectedStudent = this.studentService.student();
+  constructor(private studentService:StudentService,private ruter:Router){
+    this.selectedStudent = this.studentService.selectedStudent();
+    if(this.selectedStudent.id == null || this.selectedStudent.id == ""){
+      this.skipOnInit = true;
+      this.ruter.navigate(['/student']);
+    }
   }
-  
-
-
 }

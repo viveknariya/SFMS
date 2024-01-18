@@ -1,4 +1,5 @@
 <div class="flex flex-col">
+    @if(!skipOnInit){
     <div class="px-1">
         <div class="bg-gray-500 rounded p-2 flex gap-2">
             <div class="flex flex-col text-6xl">
@@ -10,7 +11,7 @@
                         First Name
                     </div>
                     <div>
-                        : {{selectedStudent.first_name}}
+                        : {{selectedStudent.fields.first_name}}
                     </div>
                 </div>
                 <div class="flex">
@@ -18,7 +19,7 @@
                         Last Name
                     </div>
                     <div>
-                        : {{selectedStudent.last_name}}
+                        : {{selectedStudent.fields.last_name}}
                     </div>
                 </div>
                 <div class="flex">
@@ -26,12 +27,14 @@
                         Standard
                     </div>
                     <div>
-                        : {{selectedStudent.standard}}
+                        : {{selectedStudent.fields.standard}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    }
+
     <div>
         <router-outlet></router-outlet>
     </div>

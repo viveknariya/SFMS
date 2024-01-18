@@ -1,39 +1,57 @@
 import { Component, effect } from '@angular/core';
-import { FieldsStudent, RecordStudent, RootObjectStudent, StudentService } from '../student.service';
+import { RecordStudent, RootObjectStudent, StudentService } from '../student.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AirtableConstant } from '../../airtable.service';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-student-list',
   standalone: true,
-  imports: [HttpClientModule],
+  imports: [HttpClientModule,ReactiveFormsModule],
   templateUrl: './student-list.component.html',
   styleUrl: './student-list.component.css'
 })
 export class StudentListComponent {
   store:RecordStudent[] =[];
-
   data:RecordStudent[] = [];
+  searchStudent:FormControl;
+  selectedStudent!: RecordStudent;
  
   constructor(private httpClient:HttpClient,private router:Router,private studentService:StudentService){
+    console.log("student list constructor");
     effect(() => {
       const val = this.studentService.selectedStandard();
-      if(val.id == "all"){
+      if(val.value == "all"){
         this.data = this.store;
         return;
       }
       this.data = this.store.filter((student:RecordStudent) => {
-        if(student.fields.standard == val.id){
+        if(student.fields.standard == val.value){
           return true;
         }
         return false;
       })
-
     })
+
+    this.searchStudent = new FormControl();
   }
 
   ngOnInit(): void {
+
+    this.searchStudent.valueChanges.subscribe({
+      next: (val) => {
+        console.log(val);
+        this.data = this.store.filter((student:RecordStudent) => {
+          if((student.fields.first_name.toLowerCase().includes(val.toLowerCase()) || student.fields.last_name.toLowerCase().includes(val.toLowerCase())) && (student.fields.standard == this.studentService.selectedStandard().value || this.studentService.selectedStandard().value == "all")){
+              return true;
+          }
+          return false;
+        })
+      }
+    })
+
+    console.log("student list ngOnInit");
     const header = {
       "Authorization": `Bearer ${AirtableConstant.Token}`,
     }
@@ -43,12 +61,12 @@ export class StudentListComponent {
         this.data = data.records as RecordStudent[];
 
         const val = this.studentService.selectedStandard();
-          if(val.id == "all"){
+          if(val.value == "all"){
             this.data = this.store;
             return;
           }
         this.data = this.store.filter((student:RecordStudent) => {
-          if(student.fields.standard == val.id){
+          if(student.fields.standard == val.value){
             return true;
           }
           return false;
@@ -58,7 +76,6 @@ export class StudentListComponent {
       
       }
       ,complete: () => {
-        console.log('completed');
       }
     })
   }
@@ -67,12 +84,13 @@ export class StudentListComponent {
     this.router.navigate(['/student/addStudent'])
   }
 
-  editStudent(item:FieldsStudent){
-    this.studentService.student.set(item);
-    this.router.navigate(['/student/editStudent']);
+  editStudent(item:RecordStudent){
+    this.studentService.selectedStudent.set(item);
+    this.router.navigate(['/student/editStudent/editPersonal']);
   }
 
-  editStudentFee(item:FieldsStudent){
-
+  editStudentFee(item:RecordStudent){
+    this.studentService.selectedStudent.set(item);
+    this.router.navigate(['/student/editStudent/studentFee']);
   }
 }

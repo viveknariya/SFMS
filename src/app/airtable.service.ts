@@ -10,8 +10,9 @@ export class AirtableService {
 
 export const AirtableConstant = {
   "Token" : "patBeiSUgBWkHpsc0.241f2da7499a34f8479f88367d6f10e468fa4530bedc3426c62e96953fd0e01b",
-  "BaseId" : "appBxNZiIBQYZkaty",
-  "BaseId_SFMS" : "appRKS3HtwJJg6jMv"
+  "BaseId_SFMS" : "appRKS3HtwJJg6jMv",
+  "TableId_Student": "tbleA4PW0oqduyY48",
+  "TableId_Fee_transection":"tblLbV4IZO6XuOize"
 }
 
 export const airtableAPI = {
@@ -51,9 +52,29 @@ export interface Field {
   type: string;
   options?: Options;
 }
-export interface Options {
+interface Options {
   inverseLinkFieldId: string;
   isReversed: boolean;
   linkedTableId: string;
   prefersSingleRecordLink: boolean;
+  isValid?: boolean;
+  formula?: string;
+  referencedFieldIds?: string[];
+  result?: Result;
+  choices?: Choice[];
+  dateFormat?: DateFormat;
+  precision?: number;
+}
+interface Choice {
+  id: string;
+  name: string;
+  color: string;
+}
+interface Result {
+  type: string;
+  options?: Options;
+}
+interface DateFormat {
+  name: string;
+  format: string;
 }

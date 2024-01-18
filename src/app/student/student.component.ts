@@ -12,6 +12,6 @@ import { StudentService, Standard } from './student.service';
 })
 export class StudentComponent {
   constructor(private studentService:StudentService){
-    this.studentService.selectedStandard.set({name:"All",id:"all"} as Standard)
+    this.studentService.selectedStandard.set(this.studentService.standards[0])
   }
 }

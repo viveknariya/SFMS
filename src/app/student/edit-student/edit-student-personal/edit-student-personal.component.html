@@ -1,17 +1,28 @@
 <div class="flex flex-col gap-1 w-full h-full overflow-y-auto no-scrollbar p-1">
-    <div class="flex gap-2">
-        <div>
-            <button class="p-2 bg-purple-200 rounded hover:bg-purple-300" type="button"
-                (click)="backToStandard()">Back</button>
+    <div class="flex justify-between">
+        <div class="flex gap-1">
+            <div>
+                <button class="p-2 bg-purple-200 rounded hover:bg-purple-300" type="button"
+                    (click)="backToStandard()">Back</button>
+            </div>
+            <div>
+                <button class="p-2 bg-blue-200 rounded hover:bg-blue-300" type="button"
+                    (click)="editStudentPersonal()">Save</button>
+            </div>
+            <div>
+                <button class="p-2 bg-blue-200 rounded hover:bg-blue-300" type="button"
+                    (click)="resetForm()">Reset</button>
+            </div>
         </div>
+        @if(actionMessage != ""){
         <div>
-            <button class="p-2 bg-blue-200 rounded hover:bg-blue-300" type="button">Save</button>
+            <div>
+                <div class="p-2 bg-green-200 rounded" type="button">{{actionMessage}}</div>
+            </div>
         </div>
-        <div>
-            <button class="p-2 bg-blue-200 rounded hover:bg-blue-300" type="button">Cancel</button>
-        </div>
+        }
     </div>
-    <div class="border rounded">
+    <div class="border rounded p-1">
         <form [formGroup]="editStudent" class="flex flex-col gap-2">
             <div class="flex gap-2">
                 <div class="w-3/12">
@@ -46,8 +57,8 @@
                 </div>
                 <div class="w-3/12">
                     <select formControlName="gender" class="w-full p-2 rounded bg-blue-100 focus:outline-none">
-                        <option *ngFor="let item of genders" [value]="item">
-                            {{item}}</option>
+                        <option *ngFor="let item of genders" [value]="item.value">
+                            {{item.name}}</option>
                     </select>
                 </div>
 
@@ -67,8 +78,8 @@
                 </div>
                 <div class="w-3/12">
                     <select formControlName="standard" class="w-full p-2 rounded bg-blue-100 focus:outline-none">
-                        @for (item of standards;track item) {
-                        <option [value]="item">{{item}}</option>
+                        @for (item of standards;track item.value) {
+                        <option [value]="item.value">{{item.name}}</option>
                         }@empty {
                         <label> There are no items.</label>
                         }
@@ -97,9 +108,14 @@
                 <div class="w-3/12">
                     <label class="p-2 w-full text-end inline-block">School Name</label>
                 </div>
-                <div class="w-6/12">
-                    <input class="p-2 focus:outline-none bg-blue-100 rounded w-full" placeholder="School Name"
-                        formControlName="school_name" type="text">
+                <div class="w-3/12">
+                    <select formControlName="school_name" class="w-full p-2 rounded bg-blue-100 focus:outline-none">
+                        @for (item of schools;track item.value) {
+                        <option [value]="item.value">{{item.name}}</option>
+                        }@empty {
+                        <label> There are no items.</label>
+                        }
+                    </select>
                 </div>
             </div>
             <div class="flex gap-2">

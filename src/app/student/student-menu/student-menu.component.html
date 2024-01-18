@@ -3,8 +3,9 @@
         Standard
     </div>
 
-    @for(item of Standards; track item.id){
-    <div class="px-3 py-2 m-1 rounded  hover:bg-gray-600 text-gray-400 hover:text-white cursor-pointer"
+    @for(item of Standards; track item.value){
+    <div [ngClass]="{'bg-gray-600': item == activeStandard,'text-white': item == activeStandard}"
+        class="px-3 py-2 m-1 rounded  hover:bg-gray-600 text-gray-400 hover:text-white cursor-pointer"
         (click)="standardFilter(item)">
         {{item.name}}
     </div>

@@ -8,6 +8,8 @@ import { FeeStructureComponent } from './fee/fee-structure/fee-structure.compone
 import { FeeTransectionComponent } from './fee/fee-transection/fee-transection.component';
 import { FeeComponent } from './fee/fee.component';
 import { FeeAnalyticsComponent } from './fee/fee-analytics/fee-analytics.component';
+import { StudentFeeComponent } from './student/student-fee/student-fee.component';
+import { AddEditStudentFeeComponent } from './student/student-fee/add-edit-student-fee/add-edit-student-fee.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'student', pathMatch: 'full' },
@@ -23,6 +25,9 @@ export const routes: Routes = [
                 children:[
                     {path:"",redirectTo:"editPersonal",pathMatch:"full"},
                     {path:"editPersonal",component:EditStudentPersonalComponent},
+                    {path:"studentFee",component:StudentFeeComponent},
+                    {path:"addEditStudentFee",component:AddEditStudentFeeComponent},
+
                 ]
             },
             {path:"addStudent",component:AddStudentComponent},
