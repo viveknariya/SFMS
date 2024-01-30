@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ModeOfTransections, StudentFeeService } from '../student-fee.service';
 import { Router } from '@angular/router';
-import { AirtableConstant } from '../../../airtable.service';
+import { AirtableConstant, AirtableService } from '../../../airtable.service';
 import { RecordStudent, StudentService } from '../../student.service';
 import { HttpClient } from '@angular/common/http';
 import { RecordFee } from '../../../fee/fee.service';
@@ -18,6 +18,7 @@ export class AddEditStudentFeeComponent {
   isAddMode!: boolean;
   actionMessage!: string;
   addEditFee!: FormGroup;
+  modeOfTransections:ModeOfTransections[];
   backToFee(){
     this.router.navigate(['/student/editStudent/studentFee'])
   }
@@ -42,12 +43,27 @@ export class AddEditStudentFeeComponent {
       })
     }
     else{
-
+      const header = {
+        "Authorization": `Bearer ${AirtableConstant.Token}`,
+      }
+      const payload = this.createPayload();
+      console.log("edit payload");
+      console.log(payload);
+      this.httpClient.patch<RecordFee>(`https://api.airtable.com/v0/${AirtableConstant.BaseId_SFMS}/${AirtableConstant.TableId_Fee_transection}/${this.studentFeeService.selectedStudentFee().id}`,{fields:payload},{headers:header}).subscribe({
+        next: (data:RecordFee) => {
+          console.log(data);
+          this.addEditFee.patchValue(data.fields);
+          this.actionMessage = "Edited Successfully"
+        },
+        error: (error:any) => {
+          console.log(error)
+        },
+        complete: () => {}
+      })
     }
 
   }
   resetForm(){}
-  modeOfTransections:ModeOfTransections[] | undefined;
 
   constructor(private studentFeeService:StudentFeeService,private router:Router,private httpClient:HttpClient,private studentService:StudentService){
     this.actionMessage = "";
@@ -85,5 +101,9 @@ export class AddEditStudentFeeComponent {
     payload["amount"] = +payload["amount"]
     payload["student_id"] = ""+this.studentService.selectedStudent().fields.id;
     return payload;
+  }
+
+  popupClose(){
+    this.actionMessage = "";
   }
 }

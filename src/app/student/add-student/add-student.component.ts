@@ -97,4 +97,8 @@ export class AddStudentComponent implements OnInit {
       comment: null,
     })
   }
+
+  popupClose(){
+    this.actionMessage = "";
+  }
 }

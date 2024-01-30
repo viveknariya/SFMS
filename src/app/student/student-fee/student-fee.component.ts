@@ -15,6 +15,7 @@ import { StudentFeeService } from './student-fee.service';
 export class StudentFeeComponent implements OnInit {
 
   skipOnInit:boolean = false;
+  actionMessage!: string;
   store:RecordFee[] =[];
   data:RecordFee[] = [];
   selectedStudent!: RecordStudent;
@@ -62,6 +63,18 @@ export class StudentFeeComponent implements OnInit {
   }
 
   deleteStudentFee(item:RecordFee){
-
+    const header = {
+      "Authorization": `Bearer ${AirtableConstant.Token}`,
+    }
+    this.httpClient.delete<any>(`https://api.airtable.com/v0/${AirtableConstant.BaseId_SFMS}/${AirtableConstant.TableId_Fee_transection}/${item.id}`,{headers:header}).subscribe({
+      next: (data:any) => {
+        console.log(data);
+        this.actionMessage = "Deleted Successfully"
+      },
+      error: (error:any) => {
+        console.log(error)
+      },
+      complete: () => {}
+    })
   }
 }

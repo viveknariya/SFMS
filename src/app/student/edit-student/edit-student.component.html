@@ -1,40 +1,42 @@
-<div class="flex flex-col">
+<div class="flex flex-col p-2">
+    <span class="flex items-center">
+        <span class="h-px flex-1 bg-black"></span>
+        <span class="pl-6">Lorem, ipsum dolor</span>
+    </span>
     @if(!skipOnInit){
-    <div class="px-1">
-        <div class="bg-gray-500 rounded p-2 flex gap-2">
-            <div class="flex flex-col text-6xl">
-                <i class="fa-solid fa-user"></i>
-            </div>
-            <div class="flex flex-col w-full">
+    <div class="flex gap-4">
+        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=2680&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="" class="aspect-square w-20 rounded-lg object-cover" />
+
+        <div>
+            <h3 class="text-lg/tight font-medium text-gray-900">{{selectedStudent.fields.first_name}}
+                {{selectedStudent.fields.last_name}}</h3>
+
+            <div class="mt-0.5 text-gray-700">
                 <div class="flex">
-                    <div class="w-2/12">
-                        First Name
-                    </div>
                     <div>
-                        : {{selectedStudent.fields.first_name}}
-                    </div>
-                </div>
-                <div class="flex">
-                    <div class="w-2/12">
-                        Last Name
-                    </div>
-                    <div>
-                        : {{selectedStudent.fields.last_name}}
-                    </div>
-                </div>
-                <div class="flex">
-                    <div class="w-2/12">
                         Standard
                     </div>
                     <div>
                         : {{selectedStudent.fields.standard}}
                     </div>
                 </div>
+                <div class="flex">
+                    <div>
+                        Gender
+                    </div>
+                    <div>
+                        : {{selectedStudent.fields.gender}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     }
-
+    <span class="flex items-center">
+        <span class="h-px flex-1 bg-black"></span>
+        <span class="pl-6">Lorem, ipsum dolor</span>
+    </span>
     <div>
         <router-outlet></router-outlet>
     </div>

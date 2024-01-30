@@ -99,4 +99,8 @@ export class EditStudentPersonalComponent implements OnInit{
   resetForm(){
     this.editStudent.setValue(this.studentService.selectedStudent().fields);
   }
+
+  popupClose(){
+    this.actionMessage = "";
+  }
 }
