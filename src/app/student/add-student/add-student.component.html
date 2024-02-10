@@ -12,7 +12,7 @@
         <div class="flex-1">
             <strong class="block font-medium text-gray-900"> Changes saved </strong>
 
-            <p class="mt-1 text-sm text-gray-700">Your product changes have been saved.</p>
+            <p class="mt-1  text-gray-700">Your product changes have been saved.</p>
         </div>
 
         <button class="text-gray-500 transition hover:text-gray-600" (click)="popupClose()">
@@ -27,69 +27,60 @@
 </div>
 }
 <div class="flex flex-col gap-1 w-full h-full overflow-y-auto no-scrollbar p-2">
-    <div class="flex justify-between">
-        <div class="flex gap-1">
-            <div class="inline-flex -space-x-px overflow-hidden rounded-md border bg-white shadow-sm">
-                <button class="inline-block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:relative"
-                    (click)="backToStandard()">Back</button>
-                <button class="inline-block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:relative"
-                    (click)="addStudentPersonal()">Save</button>
+    <span class="flex items-center">
+        <span class="h-px flex-1 bg-black"></span>
+        <span class="shrink-0 px-6 text-base">Form : Add Student</span>
+        <span class="h-px flex-1 bg-black"></span>
+    </span>
 
-                <button class="inline-block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:relative"
-                    (click)="resetForm()">Reset</button>
-            </div>
-
-        </div>
-
-    </div>
     <div>
         <form [formGroup]="addStudent" class="flex flex-col gap-2 items-center">
             <div class="w-6/12">
-                <label class="block text-sm font-medium text-gray-700"> ID </label>
+                <label class="block  font-medium text-gray-700"> ID </label>
 
                 <input type="text" placeholder="ID" formControlName="id"
-                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm " />
             </div>
 
             <div class="w-6/12">
-                <label class="block text-sm font-medium text-gray-700"> First Name </label>
+                <label class="block  font-medium text-gray-700"> First Name </label>
 
                 <input type="text" placeholder="First Name" formControlName="first_name"
-                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm " />
             </div>
 
             <div class="w-6/12">
-                <label class="block text-sm font-medium text-gray-700"> Last Name </label>
+                <label class="block  font-medium text-gray-700"> Last Name </label>
 
                 <input type="text" placeholder="Last Name" formControlName="last_name"
-                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm " />
             </div>
 
             <div class="w-6/12">
 
-                <label class="block text-sm font-medium text-gray-900"> Gender </label>
+                <label class="block  font-medium text-gray-900"> Gender </label>
 
                 <select formControlName="gender" text
-                    class="mt-1.5 w-6/12 ipadmini:w-full sm:w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm">
+                    class="mt-1.5 w-6/12 ipadmini:w-full w-full rounded-lg border-gray-300 text-gray-700 ">
                     <option *ngFor="let item of genders" [value]="item.value">
                         {{item.name}}</option>
                 </select>
             </div>
 
             <div class="w-6/12">
-                <label class="block text-sm font-medium text-gray-700"> Date Of Birth </label>
+                <label class="block  font-medium text-gray-700"> Date Of Birth </label>
 
                 <input type="date" placeholder="Date Of Birth" formControlName="date_of_birth"
-                    class="mt-1 w-6/12 ipadmini:w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                    class="mt-1 w-6/12 ipadmini:w-full rounded-md border-gray-200 shadow-sm " />
             </div>
 
 
             <div class="w-6/12">
 
-                <label class="block text-sm font-medium text-gray-900"> Standard </label>
+                <label class="block  font-medium text-gray-900"> Standard </label>
 
                 <select formControlName="standard" text
-                    class="mt-1.5 w-6/12 ipadmini:w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm">
+                    class="mt-1.5 w-6/12 ipadmini:w-full rounded-lg border-gray-300 text-gray-700 ">
                     @for (item of standards;track item.value) {
                     <option [value]="item.value">{{item.name}}</option>
                     }@empty {
@@ -100,24 +91,24 @@
 
 
             <div class="w-6/12">
-                <label class="block text-sm font-medium text-gray-700"> Parents Name </label>
+                <label class="block  font-medium text-gray-700"> Parents Name </label>
 
                 <input type="text" placeholder="Parents Name" formControlName="parents_name"
-                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm " />
             </div>
 
             <div class="w-6/12">
-                <label class="block text-sm font-medium text-gray-700"> Parents Mobile </label>
+                <label class="block  font-medium text-gray-700"> Parents Mobile </label>
 
                 <input type="text" placeholder="Parents Mobile" formControlName="parents_mobile"
-                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm " />
             </div>
 
             <div class="w-6/12">
-                <label class="block text-sm font-medium text-gray-700"> School Name </label>
+                <label class="block  font-medium text-gray-700"> School Name </label>
 
                 <select formControlName="school_name" text
-                    class="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm">
+                    class="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 ">
                     @for (item of schools;track item.value) {
                     <option [value]="item.value">{{item.name}}</option>
                     }@empty {
@@ -128,19 +119,27 @@
 
 
             <div class="w-6/12">
-                <label class="block text-sm font-medium text-gray-700"> Date Of Admision </label>
+                <label class="block  font-medium text-gray-700"> Date Of Admision </label>
 
                 <input type="date" placeholder="Date Of Admision" formControlName="date_of_admission"
-                    class="mt-1 w-6/12 ipadmini:w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                    class="mt-1 w-6/12 ipadmini:w-full rounded-md border-gray-200 shadow-sm " />
             </div>
 
             <div class="w-6/12">
-                <label class="block text-sm font-medium text-gray-700"> Comment </label>
+                <label class="block  font-medium text-gray-700"> Comment </label>
 
                 <textarea type="" placeholder="Comment" formControlName="comment"
-                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm"></textarea>
+                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm "></textarea>
             </div>
 
         </form>
+    </div>
+    <div class="flex justify-center">
+
+        <button
+            class="inline-block rounded border border-indigo-600 bg-indigo-600 px-8 py-3  font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+            (click)="addStudentPersonal()">Add Student
+        </button>
+
     </div>
 </div>

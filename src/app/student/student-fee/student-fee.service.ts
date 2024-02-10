@@ -14,6 +14,8 @@ export class StudentFeeService {
   selectedStudentFee = signal<RecordFee>({} as RecordFee);
   selectedStudentFeeAddMode = signal<boolean>(true);
   constructor() { }
+
+
 }
 
 export interface ModeOfTransections{

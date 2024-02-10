@@ -20,7 +20,7 @@ export class AddEditStudentFeeComponent {
   addEditFee!: FormGroup;
   modeOfTransections:ModeOfTransections[];
   backToFee(){
-    this.router.navigate(['/student/editStudent/studentFee'])
+    this.router.navigate(['/student/manage/fee'])
   }
   addEditStudentFee(){
     if(this.isAddMode){

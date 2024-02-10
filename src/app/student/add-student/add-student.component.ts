@@ -10,7 +10,13 @@ import { AirtableConstant } from '../../airtable.service';
   selector: 'app-add-student',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule,HttpClientModule],
-  templateUrl: './add-student.component.html'
+  templateUrl: './add-student.component.html',
+  styles:[`
+    input, select, textarea{
+    font-size: 0.75rem/* 12px */;
+    line-height: 1rem/* 16px */;
+  }
+  `]
 })
 export class AddStudentComponent implements OnInit {
   standards!: Standard[];

@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { StudentMenuComponent } from './student-menu/student-menu.component';
 import { StudentService, Standard } from './student.service';
 
 @Component({
   selector: 'app-student',
   standalone: true,
-  imports: [RouterOutlet,StudentMenuComponent],
+  imports: [RouterOutlet],
   templateUrl: './student.component.html',
   styleUrl: './student.component.css'
 })

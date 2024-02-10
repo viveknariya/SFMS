@@ -1,18 +1,19 @@
-import { Component, OnInit, effect } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, effect } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Gender, RecordStudent, School, Standard, StudentService } from '../../student.service';
 import { Router } from '@angular/router';
+import { AirtableConstant } from '../../airtable.service';
+import { Standard, School, Gender, RecordStudent, StudentService } from '../student.service';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { AirtableConstant } from '../../../airtable.service';
 
 @Component({
-  selector: 'app-edit-student-persional',
+  selector: 'app-student-personal',
   standalone: true,
-  imports: [ReactiveFormsModule,CommonModule,HttpClientModule],
-  templateUrl: './edit-student-personal.component.html'
+  imports: [ReactiveFormsModule,CommonModule],
+  templateUrl: './student-personal.component.html',
+  styleUrl: './student-personal.component.css'
 })
-export class EditStudentPersonalComponent implements OnInit{
+export class StudentPersonalComponent {
   skipOnInit:boolean = false;
   standards!: Standard[];
   schools!: School[];
@@ -61,9 +62,7 @@ export class EditStudentPersonalComponent implements OnInit{
     this.actionMessage = "";
   }
 
-  backToStandard(){
-    this.router.navigate(['/student']);
-  }
+
 
   editStudentPersonal(){
     const header = {

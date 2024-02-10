@@ -53,13 +53,13 @@ export class StudentFeeComponent implements OnInit {
 
   addStudentFee(){
     this.studentFeeService.selectedStudentFeeAddMode.set(true);
-    this.router.navigate(["/student/editStudent/addEditStudentFee"])
+    this.router.navigate(["/student/manage/addEditFee"])
   }
 
   editStudentFee(item:RecordFee){
     this.studentFeeService.selectedStudentFee.set(item);
     this.studentFeeService.selectedStudentFeeAddMode.set(false);
-    this.router.navigate(["/student/editStudent/addEditStudentFee"])
+    this.router.navigate(["/student/manage/addEditFee"])
   }
 
   deleteStudentFee(item:RecordFee){
@@ -76,5 +76,9 @@ export class StudentFeeComponent implements OnInit {
       },
       complete: () => {}
     })
+  }
+
+  backToStandard(){
+    this.router.navigate(['/student']);
   }
 }

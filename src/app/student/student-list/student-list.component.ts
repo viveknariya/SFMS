@@ -1,5 +1,5 @@
 import { Component, effect } from '@angular/core';
-import { RecordStudent, RootObjectStudent, StudentService } from '../student.service';
+import { RecordStudent, RootObjectStudent, Standard, StudentService } from '../student.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AirtableConstant } from '../../airtable.service';
@@ -17,24 +17,37 @@ export class StudentListComponent {
   data:RecordStudent[] = [];
   searchStudent:FormControl;
   selectedStudent!: RecordStudent;
+  standard:FormControl;
+
+  Standards:Standard[]=[];
+  activeStandard!: Standard;
  
   constructor(private httpClient:HttpClient,private router:Router,private studentService:StudentService){
     console.log("student list constructor");
-    effect(() => {
-      const val = this.studentService.selectedStandard();
-      if(val.value == "all"){
-        this.data = this.store;
-        return;
-      }
-      this.data = this.store.filter((student:RecordStudent) => {
-        if(student.fields.standard == val.value){
-          return true;
-        }
-        return false;
-      })
-    })
+    // effect(() => {
+    //   const val = this.studentService.selectedStandard();
+    //   if(val.value == "all"){
+    //     this.data = this.store;
+    //     return;
+    //   }
+    //   this.data = this.store.filter((student:RecordStudent) => {
+    //     if(student.fields.standard == val.value){
+    //       return true;
+    //     }
+    //     return false;
+    //   })
+    // })
 
     this.searchStudent = new FormControl();
+
+    
+
+    this.Standards = this.studentService.standards;
+    effect(() => {
+      this.activeStandard = this.studentService.selectedStandard();
+    })
+
+    this.standard = new FormControl(this.Standards[0].value);
   }
 
   ngOnInit(): void {
@@ -45,6 +58,21 @@ export class StudentListComponent {
         this.data = this.store.filter((student:RecordStudent) => {
           if((student.fields.first_name.toLowerCase().includes(val.toLowerCase()) || student.fields.last_name.toLowerCase().includes(val.toLowerCase())) && (student.fields.standard == this.studentService.selectedStandard().value || this.studentService.selectedStandard().value == "all")){
               return true;
+          }
+          return false;
+        })
+      }
+    })
+
+    this.standard.valueChanges.subscribe({
+      next: (val) => {
+        if(val == "all"){
+          this.data = this.store;
+          return;
+        }
+        this.data = this.store.filter((student:RecordStudent) => {
+          if(student.fields.standard == val){
+            return true;
           }
           return false;
         })
@@ -91,6 +119,11 @@ export class StudentListComponent {
 
   editStudentFee(item:RecordStudent){
     this.studentService.selectedStudent.set(item);
-    this.router.navigate(['/student/editStudent/studentFee']);
+    this.router.navigate(['/student/editStudent/fee']);
+  }
+
+  manageStudent(item:RecordStudent){
+    this.studentService.selectedStudent.set(item);
+    this.router.navigate(['/student/manage']);
   }
 }
