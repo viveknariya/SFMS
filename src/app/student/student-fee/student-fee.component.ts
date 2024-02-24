@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RecordFee, RootObjectFee } from '../../fee/fee.service';
 import { HttpClient } from '@angular/common/http';
-import { RecordStudent, StudentService } from '../student.service';
-import { AirtableConstant } from '../../airtable.service';
+import { FieldsStudent, RecordStudent, StudentService } from '../student.service';
 import { Router } from '@angular/router';
 import { StudentFeeService } from './student-fee.service';
 
@@ -18,7 +17,7 @@ export class StudentFeeComponent implements OnInit {
   actionMessage!: string;
   store:RecordFee[] =[];
   data:RecordFee[] = [];
-  selectedStudent!: RecordStudent;
+  selectedStudent!: FieldsStudent;
 
   constructor(private studentFeeService:StudentFeeService,private studentService:StudentService,private router:Router,private httpClient:HttpClient) {
     this.selectedStudent = this.studentService.selectedStudent();
@@ -32,15 +31,13 @@ export class StudentFeeComponent implements OnInit {
       return;
     }
     this.selectedStudent = this.studentService.selectedStudent();
-    const header = {
-      "Authorization": `Bearer ${AirtableConstant.Token}`,
-    }
-    this.httpClient.get<RootObjectFee>(`https://api.airtable.com/v0/${AirtableConstant.BaseId_SFMS}/fee_transection`,{headers:header}).subscribe({
+
+    this.httpClient.get<RootObjectFee>(`https://api.airtable.com/v0/fee_transection`).subscribe({
       next: (nxt:RootObjectFee) => {
         this.store = nxt.records;
         
         this.data = this.store.filter((fee:RecordFee) => {
-          if(fee.fields.student_id == this.selectedStudent.fields.id){
+          if(fee.fields.student_id == this.selectedStudent.id){
             return true;
           }
           else{
@@ -63,10 +60,7 @@ export class StudentFeeComponent implements OnInit {
   }
 
   deleteStudentFee(item:RecordFee){
-    const header = {
-      "Authorization": `Bearer ${AirtableConstant.Token}`,
-    }
-    this.httpClient.delete<any>(`https://api.airtable.com/v0/${AirtableConstant.BaseId_SFMS}/${AirtableConstant.TableId_Fee_transection}/${item.id}`,{headers:header}).subscribe({
+    this.httpClient.delete<any>(`https://api.airtable.com/v0/${item.id}`).subscribe({
       next: (data:any) => {
         console.log(data);
         this.actionMessage = "Deleted Successfully"
@@ -78,7 +72,5 @@ export class StudentFeeComponent implements OnInit {
     })
   }
 
-  backToStandard(){
-    this.router.navigate(['/student']);
-  }
+
 }

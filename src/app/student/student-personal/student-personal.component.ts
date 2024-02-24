@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, effect } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AirtableConstant } from '../../airtable.service';
-import { Standard, School, Gender, RecordStudent, StudentService } from '../student.service';
+import { Standard, School, Gender, RecordStudent, StudentService, FieldsStudent } from '../student.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -19,7 +18,7 @@ export class StudentPersonalComponent {
   schools!: School[];
   genders!: Gender[];
   actionMessage!: string;
-  selectedStudent!: RecordStudent;
+  selectedStudent!: FieldsStudent;
   editStudent:FormGroup;
 
   constructor(private studentService:StudentService,private router:Router,private httpClient:HttpClient){
@@ -54,7 +53,7 @@ export class StudentPersonalComponent {
     }
     console.log("EditStudentPersonalComponent N")
     console.log(this.studentService.selectedStudent())
-    this.editStudent.patchValue(this.studentService.selectedStudent().fields);
+    this.editStudent.patchValue(this.studentService.selectedStudent());
 
     this.standards = this.studentService.standards.slice(1);
     this.schools = this.studentService.schools;
@@ -65,12 +64,9 @@ export class StudentPersonalComponent {
 
 
   editStudentPersonal(){
-    const header = {
-      "Authorization": `Bearer ${AirtableConstant.Token}`,
-    }
     const payload = this.createPayload();
     console.log(payload);
-    this.httpClient.patch<RecordStudent>(`https://api.airtable.com/v0/${AirtableConstant.BaseId_SFMS}/${AirtableConstant.TableId_Student}/${this.studentService.selectedStudent().id}`,{fields:payload},{headers:header}).subscribe({
+    this.httpClient.patch<RecordStudent>(`https://api.airtable.com/v0/${this.studentService.selectedStudent().id}`,{fields:payload}).subscribe({
       next: (data:RecordStudent) => {
         this.editStudent.patchValue(data.fields);
         this.actionMessage = "Saved Successfully"
@@ -96,7 +92,7 @@ export class StudentPersonalComponent {
   }
 
   resetForm(){
-    this.editStudent.setValue(this.studentService.selectedStudent().fields);
+    this.editStudent.setValue(this.studentService.selectedStudent());
   }
 
   popupClose(){

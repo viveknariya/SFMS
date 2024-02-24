@@ -31,7 +31,7 @@ export class StudentService {
   schools:School[] = [
     {name:"I. P. Savani High School, Surat",value:"ip-savani-high-school-surat"}
   ];
-  selectedStudent = signal<RecordStudent>({} as RecordStudent);
+  selectedStudent = signal<FieldsStudent>({} as FieldsStudent);
   selectedStandard = signal<Standard>(this.standards[0]);
 
   constructor() { 

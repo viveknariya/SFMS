@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ModeOfTransections, StudentFeeService } from '../student-fee.service';
 import { Router } from '@angular/router';
-import { AirtableConstant, AirtableService } from '../../../airtable.service';
 import { RecordStudent, StudentService } from '../../student.service';
 import { HttpClient } from '@angular/common/http';
 import { RecordFee } from '../../../fee/fee.service';
@@ -24,13 +23,10 @@ export class AddEditStudentFeeComponent {
   }
   addEditStudentFee(){
     if(this.isAddMode){
-      const header = {
-        "Authorization": `Bearer ${AirtableConstant.Token}`,
-      }
       const payload = this.createPayload();
       console.log("add payload");
       console.log(payload);
-      this.httpClient.post<RecordFee>(`https://api.airtable.com/v0/${AirtableConstant.BaseId_SFMS}/${AirtableConstant.TableId_Fee_transection}`,{records:[{fields:payload}]},{headers:header}).subscribe({
+      this.httpClient.post<RecordFee>(`https://api.airtable.com/v0/transection`,{records:[{fields:payload}]}).subscribe({
         next: (data:RecordFee) => {
           console.log(data);
           this.addEditFee.patchValue(data.fields);
@@ -43,13 +39,10 @@ export class AddEditStudentFeeComponent {
       })
     }
     else{
-      const header = {
-        "Authorization": `Bearer ${AirtableConstant.Token}`,
-      }
       const payload = this.createPayload();
       console.log("edit payload");
       console.log(payload);
-      this.httpClient.patch<RecordFee>(`https://api.airtable.com/v0/${AirtableConstant.BaseId_SFMS}/${AirtableConstant.TableId_Fee_transection}/${this.studentFeeService.selectedStudentFee().id}`,{fields:payload},{headers:header}).subscribe({
+      this.httpClient.patch<RecordFee>(`https://api.airtable.com/v0/ableId_Fee_transection}/${this.studentFeeService.selectedStudentFee().id}`,{fields:payload}).subscribe({
         next: (data:RecordFee) => {
           console.log(data);
           this.addEditFee.patchValue(data.fields);
@@ -99,7 +92,7 @@ export class AddEditStudentFeeComponent {
       }
     });
     payload["amount"] = +payload["amount"]
-    payload["student_id"] = ""+this.studentService.selectedStudent().fields.id;
+    payload["student_id"] = ""+this.studentService.selectedStudent().id;
     return payload;
   }
 

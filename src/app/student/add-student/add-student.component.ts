@@ -4,7 +4,6 @@ import { Gender, RecordStudent, School, Standard, StudentService } from '../stud
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { AirtableConstant } from '../../airtable.service';
 
 @Component({
   selector: 'app-add-student',
@@ -56,13 +55,11 @@ export class AddStudentComponent implements OnInit {
   }
 
   addStudentPersonal(){
-    const header = {
-      "Authorization": `Bearer ${AirtableConstant.Token}`,
-    }
+
     const payload = this.createPayload();
     console.log("add payload");
     console.log(payload);
-    this.httpClient.post<RecordStudent>(`https://api.airtable.com/v0/${AirtableConstant.BaseId_SFMS}/${AirtableConstant.TableId_Student}`,{records:[{fields:payload}]},{headers:header}).subscribe({
+    this.httpClient.post<RecordStudent>(`https://api.airtable.com/v0/`,{records:[{fields:payload}]}).subscribe({
       next: (data:RecordStudent) => {
         console.log(data);
         this.addStudent.patchValue(data.fields);

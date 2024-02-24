@@ -1,9 +1,9 @@
 import { Component, effect } from '@angular/core';
-import { RecordStudent, RootObjectStudent, Standard, StudentService } from '../student.service';
+import { FieldsStudent, RecordStudent, Standard, StudentService } from '../student.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AirtableConstant } from '../../airtable.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { BackendConstant } from '../../backend';
 
 @Component({
   selector: 'app-student-list',
@@ -13,8 +13,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './student-list.component.css'
 })
 export class StudentListComponent {
-  store:RecordStudent[] =[];
-  data:RecordStudent[] = [];
+  store:FieldsStudent[] =[];
+  data:FieldsStudent[] = [];
   searchStudent:FormControl;
   selectedStudent!: RecordStudent;
   standard:FormControl;
@@ -55,8 +55,8 @@ export class StudentListComponent {
     this.searchStudent.valueChanges.subscribe({
       next: (val) => {
         console.log(val);
-        this.data = this.store.filter((student:RecordStudent) => {
-          if((student.fields.first_name.toLowerCase().includes(val.toLowerCase()) || student.fields.last_name.toLowerCase().includes(val.toLowerCase())) && (student.fields.standard == this.studentService.selectedStandard().value || this.studentService.selectedStandard().value == "all")){
+        this.data = this.store.filter((student:FieldsStudent) => {
+          if((student.first_name.toLowerCase().includes(val.toLowerCase()) || student.last_name.toLowerCase().includes(val.toLowerCase())) && (student.standard == this.studentService.selectedStandard().value || this.studentService.selectedStandard().value == "all")){
               return true;
           }
           return false;
@@ -70,8 +70,8 @@ export class StudentListComponent {
           this.data = this.store;
           return;
         }
-        this.data = this.store.filter((student:RecordStudent) => {
-          if(student.fields.standard == val){
+        this.data = this.store.filter((student:FieldsStudent) => {
+          if(student.standard == val){
             return true;
           }
           return false;
@@ -80,21 +80,18 @@ export class StudentListComponent {
     })
 
     console.log("student list ngOnInit");
-    const header = {
-      "Authorization": `Bearer ${AirtableConstant.Token}`,
-    }
-    this.httpClient.get<RootObjectStudent>('https://api.airtable.com/v0/appRKS3HtwJJg6jMv/tbleA4PW0oqduyY48',{headers:header}).subscribe({
-      next: (data:RootObjectStudent) => {
-        this.store = data.records as RecordStudent[];
-        this.data = data.records as RecordStudent[];
+    this.httpClient.get<FieldsStudent[]>(`${BackendConstant.BASE_URL}/api/student`).subscribe({
+      next: (data:FieldsStudent[]) => {
+        this.store = data as FieldsStudent[];
+        this.data = data as FieldsStudent[];
 
         const val = this.studentService.selectedStandard();
           if(val.value == "all"){
             this.data = this.store;
             return;
           }
-        this.data = this.store.filter((student:RecordStudent) => {
-          if(student.fields.standard == val.value){
+        this.data = this.store.filter((student:FieldsStudent) => {
+          if(student.standard == val.value){
             return true;
           }
           return false;
@@ -112,17 +109,17 @@ export class StudentListComponent {
     this.router.navigate(['/student/addStudent'])
   }
 
-  editStudent(item:RecordStudent){
+  editStudent(item:FieldsStudent){
     this.studentService.selectedStudent.set(item);
     this.router.navigate(['/student/editStudent/editPersonal']);
   }
 
-  editStudentFee(item:RecordStudent){
+  editStudentFee(item:FieldsStudent){
     this.studentService.selectedStudent.set(item);
     this.router.navigate(['/student/editStudent/fee']);
   }
 
-  manageStudent(item:RecordStudent){
+  manageStudent(item:FieldsStudent){
     this.studentService.selectedStudent.set(item);
     this.router.navigate(['/student/manage']);
   }
